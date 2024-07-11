@@ -6,12 +6,12 @@ describe('tcmb-xrates', () => {
   test('test tcmb-xrates', async () => {
     const result = await parseTcmbDailyKurlarXML(xmlString);
     assert(result !== undefined);
-    console.log('TarihDate:', result.tarihDate);
-    console.log('Currencies:', result.currencies);
-    console.log(
-      'exchangeRates:',
-      result.exchangeRates.filter((f) => f.exchange_type === 'TCMB.CR')
-    );
+    // console.log('TarihDate:', result.tarihDate);
+    // console.log('Currencies:', result.currencies);
+    // console.log(
+    //   'exchangeRates:',
+    //   result.exchangeRates.filter((f) => f.exchange_type === 'TCMB.CR')
+    // );
   });
 });
 

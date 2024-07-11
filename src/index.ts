@@ -6,6 +6,7 @@ import createHttpError from 'http-errors';
 import { XRateRepository } from './db/xrate-repository';
 import { EcbXRateService } from './services/ecb/ecb-xrates-service';
 import { TcmbXRateService } from './services/tcmb/tcmb-xrates-service';
+import { KznbXRateService } from './services/kznb/kznb-xrates-service';
 
 const ioCContainer = createIoCContainer();
 
@@ -64,6 +65,18 @@ const app = new Elysia()
     '/rates/tcmb/daily',
     async ({ query: { date } }) => {
       const service = ioCContainer.getService<TcmbXRateService>(TcmbXRateService.name);
+      return service.downloadDailyRates(date);
+    },
+    {
+      query: t.Object({
+        date: t.String({ description: 'Date in format YYYY-MM-DD' }),
+      }),
+    }
+  )
+  .post(
+    '/rates/kznb/daily',
+    async ({ query: { date } }) => {
+      const service = ioCContainer.getService<KznbXRateService>(KznbXRateService.name);
       return service.downloadDailyRates(date);
     },
     {

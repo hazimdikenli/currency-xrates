@@ -1,9 +1,8 @@
-const TCMB_DAILY_RATES_URL = 'https://www.tcmb.gov.tr/kurlar/today.xml';
-
-export class TcmbXRatesDownloader {
-  async downloadXML(): Promise<string> {
+export class KznbXRatesDownloader {
+  async downloadXML(date: string): Promise<string> {
+    const url = 'https://nationalbank.kz/rss/get_rates.cfm?fdate=' + new Date(date).toLocaleDateString('tr');
     try {
-      const response = await fetch(TCMB_DAILY_RATES_URL);
+      const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`Failed to download XML: ${response.statusText}`);
       }

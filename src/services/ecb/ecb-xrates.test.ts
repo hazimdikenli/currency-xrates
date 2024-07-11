@@ -1,16 +1,6 @@
 import { expect, test, describe } from 'bun:test';
 import parseEcbDailyRatesXml from './ecb-xrates';
 
-describe('arithmetic', () => {
-  test('2 + 2', () => {
-    expect(2 + 2).toBe(4);
-  });
-
-  test('2 * 2', () => {
-    expect(2 * 2).toBe(4);
-  });
-});
-
 describe('ecb-xrates', () => {
   test('test ecb-xrates', async () => {
     const result = await parseEcbDailyRatesXml(xmlString);
