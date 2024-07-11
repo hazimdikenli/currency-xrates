@@ -1,7 +1,7 @@
 import { Kysely, PostgresDialect } from 'kysely';
 import { Pool } from 'pg';
-import { dbConfig } from '../config';
 import type { DB } from './db-types';
+import { dbConfig } from '../config';
 const pgTypes = require('pg').types;
 const pool = new Pool({
   host: dbConfig.host,
@@ -20,7 +20,6 @@ const parseFn = function (val: unknown) {
 
 const parseFnDate = function (val: unknown) {
   return val as string;
-  //return val === null ? null : parseISO(val as string);
 };
 
 pgTypes.setTypeParser(pgTypes.builtins.TIMESTAMPTZ, parseFn);
