@@ -2,6 +2,7 @@ import registerDbProviders from './db/providers'
 import registerEcbProviders from './services/ecb/providers'
 import registerTcmbProviders from './services/tcmb/providers'
 import registerKznbProviders from './services/kznb/providers'
+import registerConversionProviders from './services/currency-conversion/providers'
 
 type ServiceCallback<T> = (container: IoCContainer) => T
 
@@ -35,6 +36,7 @@ export function createIoCContainer() {
   registerEcbProviders(container)
   registerTcmbProviders(container)
   registerKznbProviders(container)
+  registerConversionProviders(container)
 
   return container
 }

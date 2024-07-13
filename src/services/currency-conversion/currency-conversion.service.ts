@@ -5,7 +5,7 @@ type CurrencyCode = 'TRY' | 'GBP' | 'USD' | 'EUR' | 'CHF' | string
 export interface ConversionParams {
   amount: number
   fromCC: CurrencyCode
-  dateAsIso: string
+  date: string
   toCC: CurrencyCode
   exchangeType: TcmbExchangeType | string
 }
@@ -17,18 +17,12 @@ interface IXRateGetter {
 export class CurrencyConversionService {
   constructor(private xrateRepository: IXRateGetter) {}
 
-  async convert({
-    amount,
-    fromCC,
-    dateAsIso,
-    toCC,
-    exchangeType,
-  }: ConversionParams): Promise<number> {
+  async convert({ amount, fromCC, date, toCC, exchangeType }: ConversionParams): Promise<number> {
     if (fromCC === toCC) return amount
     if (Number(amount) === 0) return amount
 
     let xrates = await this.xrateRepository.findMany({
-      exchange_date: dateAsIso,
+      exchange_date: date,
     })
     if (exchangeType) xrates = xrates.filter(f => f.exchange_type === exchangeType)
     return this.doConversion(amount, fromCC, toCC, xrates)

@@ -31,7 +31,7 @@ describe('currency-conversion', () => {
     const resp = await currencyConversionService.convert({
       amount: 10,
       fromCC: 'TRY',
-      dateAsIso: '2020-01-01',
+      date: '2020-01-01',
       toCC: 'USD',
       exchangeType: 'X1',
     })
@@ -42,7 +42,7 @@ describe('currency-conversion', () => {
     const resp = await currencyConversionService.convert({
       amount: 12.345,
       fromCC: 'USD',
-      dateAsIso: '2020-01-01',
+      date: '2020-01-01',
       toCC: 'TRY',
       exchangeType: 'X1',
     })
@@ -53,7 +53,7 @@ describe('currency-conversion', () => {
     const resp = await currencyConversionService.convert({
       amount: 2,
       fromCC: 'ABC',
-      dateAsIso: '2020-01-01',
+      date: '2020-01-01',
       toCC: 'USD',
       exchangeType: 'X1',
     })
