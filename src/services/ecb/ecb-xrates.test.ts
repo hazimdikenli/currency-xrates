@@ -1,18 +1,18 @@
-import { expect, test, describe } from 'bun:test';
-import parseEcbDailyRatesXml from './ecb-xrates';
+import { expect, test, describe } from 'bun:test'
+import parseEcbDailyRatesXml from './ecb-xrates'
 
 describe('ecb-xrates', () => {
   test('test ecb-xrates', async () => {
-    const result = await parseEcbDailyRatesXml(xmlString);
-    expect(result).toBeDefined();
-    expect(result.date).toEqual('2024-05-22');
-    expect(result.rates).toBeArray();
+    const result = await parseEcbDailyRatesXml(xmlString)
+    expect(result).toBeDefined()
+    expect(result.date).toEqual('2024-05-22')
+    expect(result.rates).toBeArray()
     expect(result.rates).toContainEqual({
       currency: 'USD',
       rate: '1.0729',
-    });
-  });
-});
+    })
+  })
+})
 
 var xmlString = `<?xml version="1.0" encoding="UTF-8"?>
 <gesmes:Envelope xmlns:gesmes="http://www.gesmes.org/xml/2002-08-01" xmlns="http://www.ecb.int/vocabulary/2002-08-01/eurofxref">
@@ -28,4 +28,4 @@ var xmlString = `<?xml version="1.0" encoding="UTF-8"?>
 			<Cube currency='TRY' rate='35.0707'/>
 		</Cube>
 	</Cube>
-</gesmes:Envelope>`;
+</gesmes:Envelope>`

@@ -1,31 +1,43 @@
-import { differenceBy, extend, isEqual, omit } from 'lodash';
-import { CurrencyExchangeRate, CurrencyExchangeRateCreate, CurrencyExchangeRateTable, DB } from './db-types';
-import { Kysely } from 'kysely';
+import { differenceBy, extend, isEqual, omit } from 'lodash'
+import {
+  CurrencyExchangeRate,
+  CurrencyExchangeRateCreate,
+  CurrencyExchangeRateTable,
+  DB,
+} from './db-types'
+import { Kysely } from 'kysely'
 
-const tableName = 'currency_exchange_rate';
+const tableName = 'currency_exchange_rate'
 export type CurrencyExchangeRateDto = {
-  amount: number;
-  currency_code: string;
-  exchange_date: string;
-  exchange_type: string;
-  target_amount: string;
-  target_currency_code: string;
-};
+  amount: number
+  currency_code: string
+  exchange_date: string
+  exchange_type: string
+  target_amount: string
+  target_currency_code: string
+}
 export class XRateRepository {
   constructor(private db: Kysely<DB>) {}
   findMany(criteria: CriteriaType): Promise<CurrencyExchangeRateDto[]> {
     return this.db
       .selectFrom(tableName)
-      .select(['exchange_date', 'exchange_type', 'amount', 'currency_code', 'target_amount', 'target_currency_code'])
-      .where((eb) => eb.and(criteria))
-      .execute();
+      .select([
+        'exchange_date',
+        'exchange_type',
+        'amount',
+        'currency_code',
+        'target_amount',
+        'target_currency_code',
+      ])
+      .where(eb => eb.and(criteria))
+      .execute()
   }
 
   async createAll(rates: CurrencyExchangeRateCreate[]) {
-    const created = await this.db.insertInto(tableName).values(rates).execute();
-    console.log('Inserted:', created);
-    return created;
+    const created = await this.db.insertInto(tableName).values(rates).execute()
+    console.log('Inserted:', created)
+    return created
   }
 }
 
-type CriteriaType = Partial<Pick<CurrencyExchangeRate, 'exchange_date' | 'currency_code'>>;
+type CriteriaType = Partial<Pick<CurrencyExchangeRate, 'exchange_date' | 'currency_code'>>

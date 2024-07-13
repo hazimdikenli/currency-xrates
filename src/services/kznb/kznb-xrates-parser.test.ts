@@ -1,24 +1,24 @@
-import { expect, test, describe } from 'bun:test';
-import assert from 'node:assert';
-import parseKznbRatesXML from './kznb-xrates-parser';
+import { expect, test, describe } from 'bun:test'
+import assert from 'node:assert'
+import parseKznbRatesXML from './kznb-xrates-parser'
 
 describe('kznb-xrates', () => {
   test('test tcmb-xrates', async () => {
-    const result = await parseKznbRatesXML(xmlString);
-    assert(result !== undefined);
-    assert(result.date === '06.05.2024');
-    assert(result.rates?.length);
-    const rates = result.rates;
-    assert(rates[0].currency_code === 'AUD');
-    assert(rates[0].rate === 291.85);
-    assert(rates[0].amount === 1);
-    assert(rates[1].currency_code === 'IRR');
-    assert(rates[1].rate === 10.5);
-    assert(rates[1].amount === 1000);
+    const result = await parseKznbRatesXML(xmlString)
+    assert(result !== undefined)
+    assert(result.date === '06.05.2024')
+    assert(result.rates?.length)
+    const rates = result.rates
+    assert(rates[0].currency_code === 'AUD')
+    assert(rates[0].rate === 291.85)
+    assert(rates[0].amount === 1)
+    assert(rates[1].currency_code === 'IRR')
+    assert(rates[1].rate === 10.5)
+    assert(rates[1].amount === 1000)
     //     console.log('TarihDate:', result.date);
     //     console.log('Currencies:', result.rates);
-  });
-});
+  })
+})
 
 var xmlString = `<?xml version="1.0" encoding="utf-8"?>
 <rates>
@@ -46,4 +46,4 @@ var xmlString = `<?xml version="1.0" encoding="utf-8"?>
                 <change>0.00</change>
         </item>
 </rates>
-`;
+`

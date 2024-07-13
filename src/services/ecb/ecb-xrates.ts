@@ -1,38 +1,38 @@
-import { parseStringPromise } from 'xml2js';
+import { parseStringPromise } from 'xml2js'
 
 // Define TypeScript interfaces for the expected structure
 interface Cube {
   $: {
-    currency: string;
-    rate: string;
-  };
+    currency: string
+    rate: string
+  }
 }
 
 interface TimeCube {
   $: {
-    time: string;
-  };
-  Cube: Cube[];
+    time: string
+  }
+  Cube: Cube[]
 }
 
 interface Envelope {
   'gesmes:Envelope': {
     Cube: [
       {
-        Cube: TimeCube[];
-      }
-    ];
-  };
+        Cube: TimeCube[]
+      },
+    ]
+  }
 }
 
 // Parse the XML data
 
 async function parseEcbDailyRatesXml(xmlData: string) {
-  const result: Envelope = await parseStringPromise(xmlData).catch((err) => {
-    console.error('Failed to parse XML:', err);
-  });
+  const result: Envelope = await parseStringPromise(xmlData).catch(err => {
+    console.error('Failed to parse XML:', err)
+  })
 
-  const timeCubes = result['gesmes:Envelope'].Cube[0].Cube;
+  const timeCubes = result['gesmes:Envelope'].Cube[0].Cube
 
   /*
   timeCubes.forEach((timeCube) => {
@@ -44,10 +44,10 @@ async function parseEcbDailyRatesXml(xmlData: string) {
   */
   return {
     date: timeCubes[0].$.time,
-    rates: timeCubes[0].Cube.map((cube) => ({
+    rates: timeCubes[0].Cube.map(cube => ({
       currency: cube.$.currency,
       rate: cube.$.rate,
     })),
-  };
+  }
 }
-export default parseEcbDailyRatesXml;
+export default parseEcbDailyRatesXml

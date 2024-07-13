@@ -1,10 +1,10 @@
-import { parseStringPromise } from 'xml2js';
+import { parseStringPromise } from 'xml2js'
 
 interface Rate {
-  currency_name: string;
-  currency_code: string;
-  rate: number;
-  amount: number;
+  currency_name: string
+  currency_code: string
+  rate: number
+  amount: number
 }
 
 interface Rates {
@@ -13,13 +13,13 @@ interface Rates {
   // link: string;
   // description: string;
   // copyright: string;
-  date: string;
-  rates: Rate[];
+  date: string
+  rates: Rate[]
 }
 
 async function parseKznbRatesXML(xmlData: string) {
   try {
-    const result = await parseStringPromise(xmlData, { explicitArray: false });
+    const result = await parseStringPromise(xmlData, { explicitArray: false })
 
     const ratesData: Rates = {
       date: result.rates.date,
@@ -29,13 +29,13 @@ async function parseKznbRatesXML(xmlData: string) {
         rate: parseFloat(item.description),
         amount: parseInt(item.quant, 10),
       })),
-    };
+    }
 
-    return ratesData;
+    return ratesData
   } catch (error) {
-    console.error('Error parsing XML:', error);
-    throw error;
+    console.error('Error parsing XML:', error)
+    throw error
   }
 }
 
-export default parseKznbRatesXML;
+export default parseKznbRatesXML

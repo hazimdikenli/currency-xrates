@@ -1,18 +1,18 @@
-import { expect, test, describe } from 'bun:test';
-import parseTcmbDailyKurlarXML from './tcmb-xrates-parser';
+import { expect, test, describe } from 'bun:test'
+import parseTcmbDailyKurlarXML from './tcmb-xrates-parser'
 
 describe('tcmb-xrates', () => {
   test('test tcmb-xrates', async () => {
-    const result = await parseTcmbDailyKurlarXML(xmlString);
-    expect(result).toBeDefined();
+    const result = await parseTcmbDailyKurlarXML(xmlString)
+    expect(result).toBeDefined()
     // console.log('TarihDate:', result.tarihDate);
     // console.log('Currencies:', result.currencies);
     // console.log(
     //   'exchangeRates:',
     //   result.exchangeRates.filter((f) => f.exchange_type === 'TCMB.CR')
     // );
-  });
-});
+  })
+})
 
 var xmlString = `<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="isokur.xsl"?>
@@ -292,4 +292,4 @@ var xmlString = `<?xml version="1.0" encoding="UTF-8"?>
 		<CrossRateUSD/>
 		<CrossRateOther>1.32151</CrossRateOther>
 	</Currency>
-</Tarih_Date>`;
+</Tarih_Date>`

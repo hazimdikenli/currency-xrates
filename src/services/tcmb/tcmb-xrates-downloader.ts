@@ -1,15 +1,15 @@
-const TCMB_DAILY_RATES_URL = 'https://www.tcmb.gov.tr/kurlar/today.xml';
+const TCMB_DAILY_RATES_URL = 'https://www.tcmb.gov.tr/kurlar/today.xml'
 
 export class TcmbXRatesDownloader {
   async downloadXML(): Promise<string> {
     try {
-      const response = await fetch(TCMB_DAILY_RATES_URL);
+      const response = await fetch(TCMB_DAILY_RATES_URL)
       if (!response.ok) {
-        throw new Error(`Failed to download XML: ${response.statusText}`);
+        throw new Error(`Failed to download XML: ${response.statusText}`)
       }
-      return await response.text();
+      return await response.text()
     } catch (error: unknown) {
-      throw new Error(`Failed to download XML: ${error}`);
+      throw new Error(`Failed to download XML: ${error}`)
     }
   }
 }
