@@ -15,14 +15,28 @@ export class TcmbXRateService {
     const { currencies, exchangeRates, tarihDate } = await parseTcmbDailyKurlarXML(xml)
     if (!exchangeRates) throw new Error(`Failed to parse XML: ${xml}`)
     const [day, month, year] = tarihDate.Tarih.split('.')
-    const downloadedDate = `${year}-${month}-${day}`
-    if (downloadedDate !== date)
+    // const downloadedDate = `${year}-${month}-${day}`
+    let downloadedDate = new Date(`${year}-${month}-${day}`)
+    // go to next day
+    downloadedDate.setDate(downloadedDate.getDate() + 1)
+    if (downloadedDate.toISOString().split('T')[0] !== date)
       throw new Error(`Invalid date: requested ${date} , received: ${downloadedDate}`)
 
-    const rates = exchangeRates.map(f => ({
-      ...f,
-      exchange_date: date,
-    }))
-    await this.xrateRepository.createAll(rates)
+    // if it is saturday
+    let daysToSave = 1
+    if (downloadedDate.getDay() === 6) {
+      daysToSave = 3
+      console.log('saving for three days')
+    }
+    for (let i = 0; i < daysToSave; i++) {
+      let dateToSave = new Date(`${year}-${month}-${day}`)
+      dateToSave.setDate(dateToSave.getDate() + i)
+      const exchange_date = dateToSave.toISOString().split('T')[0]
+      const rates = exchangeRates.map(f => ({
+        ...f,
+        exchange_date,
+      }))
+      await this.xrateRepository.createAll(rates)
+    }
   }
 }
