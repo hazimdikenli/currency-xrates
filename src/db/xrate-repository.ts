@@ -16,8 +16,10 @@ export type CurrencyExchangeRateDto = {
   target_amount: string
   target_currency_code: string
 }
+
+export type KyselyPGDB = Kysely<DB>
 export class XRateRepository {
-  constructor(private db: Kysely<DB>) {}
+  constructor(private db: KyselyPGDB) {}
   findMany(criteria: CriteriaType): Promise<CurrencyExchangeRateDto[]> {
     return this.db
       .selectFrom(tableName)

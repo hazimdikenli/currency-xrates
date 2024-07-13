@@ -1,4 +1,4 @@
-import { Kysely, PostgresDialect } from 'kysely'
+import { Kysely, PostgresDialect, sql } from 'kysely'
 import { Pool } from 'pg'
 import type { DB } from './db-types'
 import { dbConfig } from '../config'
@@ -31,3 +31,15 @@ export const pgDB = new Kysely<DB>({
     pool: pool,
   }),
 })
+
+export async function checkDatabaseLiveness(): Promise<boolean> {
+  try {
+    // Perform a lightweight query to check the connection
+    // @ts-ignore
+    const res = await sql.raw<{ current_timestamp: Date }>`SELECT current_timestamp`.execute(pgDB)
+    return res.rows[0].current_timestamp !== undefined
+  } catch (error) {
+    console.error('Database liveness check failed:', error)
+    return false // Connection is not alive
+  }
+}

@@ -1,13 +1,14 @@
-import { Elysia, t } from 'elysia'
 import { logger } from '@bogeychan/elysia-logger'
-import { createIoCContainer } from './ioc-container'
 import swagger from '@elysiajs/swagger'
+import { Elysia, t } from 'elysia'
 import createHttpError from 'http-errors'
-import { XRateRepository } from './db/xrate-repository'
-import { EcbXRateService } from './services/ecb/ecb-xrates-service'
-import { TcmbXRateService } from './services/tcmb/tcmb-xrates-service'
-import { KznbXRateService } from './services/kznb/kznb-xrates-service'
+import { KyselyPGDB, XRateRepository } from './db/xrate-repository'
+import { createIoCContainer } from './ioc-container'
 import { CurrencyConversionService } from './services/currency-conversion/currency-conversion.service'
+import { EcbXRateService } from './services/ecb/ecb-xrates-service'
+import { KznbXRateService } from './services/kznb/kznb-xrates-service'
+import { TcmbXRateService } from './services/tcmb/tcmb-xrates-service'
+import { checkDatabaseLiveness } from './db/db'
 
 const ioCContainer = createIoCContainer()
 
@@ -23,9 +24,21 @@ const app = new Elysia()
       level: 'debug',
     })
   )
-  .use(swagger())
   .get('/', () => 'Hello Elysia')
-
+  .use(swagger())
+  .get('/health/ready', () => {
+    return {
+      status: 'ok',
+      timestamp: new Date().toISOString(),
+    }
+  })
+  .get('/health/live', async () => {
+    const status = (await checkDatabaseLiveness()) ? 'ok' : 'down'
+    return {
+      status,
+      timestamp: new Date().toISOString(),
+    }
+  })
   .get(
     '/rates',
     async ({ query: { date, 'currency-code': currency_code } }) => {
