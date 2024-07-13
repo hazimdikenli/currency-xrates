@@ -101,9 +101,9 @@ async function parseTcmbDailyKurlarXML(xmlData: string) {
       return rates.filter((rate) => !isNaN(rate.target_amount)); // Filter out any NaN values
     });
 
-    console.log('Tarih_Date Attributes:', tarihDate);
-    console.log('Currencies:', currencies);
-    console.log('Exchange Rates:', exchangeRates);
+    // console.log('Tarih_Date Attributes:', tarihDate);
+    // console.log('Currencies:', currencies);
+    // console.log('Exchange Rates:', exchangeRates);
     return {
       tarihDate,
       currencies,

@@ -15,8 +15,8 @@ describe('kznb-xrates', () => {
     assert(rates[1].currency_code === 'IRR');
     assert(rates[1].rate === 10.5);
     assert(rates[1].amount === 1000);
-    console.log('TarihDate:', result.date);
-    console.log('Currencies:', result.rates);
+    //     console.log('TarihDate:', result.date);
+    //     console.log('Currencies:', result.rates);
   });
 });
 

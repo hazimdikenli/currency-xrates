@@ -3,10 +3,17 @@ import { CurrencyExchangeRate, CurrencyExchangeRateCreate, CurrencyExchangeRateT
 import { Kysely } from 'kysely';
 
 const tableName = 'currency_exchange_rate';
-
+export type CurrencyExchangeRateDto = {
+  amount: number;
+  currency_code: string;
+  exchange_date: string;
+  exchange_type: string;
+  target_amount: string;
+  target_currency_code: string;
+};
 export class XRateRepository {
   constructor(private db: Kysely<DB>) {}
-  findMany(criteria: CriteriaType) {
+  findMany(criteria: CriteriaType): Promise<CurrencyExchangeRateDto[]> {
     return this.db
       .selectFrom(tableName)
       .select(['exchange_date', 'exchange_type', 'amount', 'currency_code', 'target_amount', 'target_currency_code'])

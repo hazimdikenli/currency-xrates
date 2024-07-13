@@ -1,11 +1,10 @@
 import { expect, test, describe } from 'bun:test';
-import assert from 'node:assert';
 import parseTcmbDailyKurlarXML from './tcmb-xrates-parser';
 
 describe('tcmb-xrates', () => {
   test('test tcmb-xrates', async () => {
     const result = await parseTcmbDailyKurlarXML(xmlString);
-    assert(result !== undefined);
+    expect(result).toBeDefined();
     // console.log('TarihDate:', result.tarihDate);
     // console.log('Currencies:', result.currencies);
     // console.log(

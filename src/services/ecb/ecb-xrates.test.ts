@@ -11,7 +11,6 @@ describe('ecb-xrates', () => {
       currency: 'USD',
       rate: '1.0729',
     });
-    // console.log('Result:', result);
   });
 });
 
