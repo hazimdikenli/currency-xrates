@@ -9,9 +9,7 @@ const pool = new Pool({
   user: dbConfig.user,
   password: dbConfig.password,
   database: dbConfig.database,
-  ssl: {
-    rejectUnauthorized: false,
-  },
+  ssl: false,
 })
 
 const parseFn = function (val: unknown) {

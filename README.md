@@ -12,4 +12,18 @@ To start the development server run:
 bun run dev
 ```
 
-Open http://localhost:3000/ with your browser to see the result.
+Open http://localhost:3000/swagger with your browser to see the result.
+
+## DB
+Setup you db through env variables
+`run db/init-db.sql`
+
+## ENV
+DB_HOST=
+DB_PORT=5432
+DB_USER=dba
+DB_PASSWORD=very-secret
+DB_NAME=db-name
+
+LOG_LEVEL=debug
+

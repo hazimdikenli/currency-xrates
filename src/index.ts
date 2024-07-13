@@ -2,13 +2,14 @@ import { logger } from '@bogeychan/elysia-logger'
 import swagger from '@elysiajs/swagger'
 import { Elysia, t } from 'elysia'
 import createHttpError from 'http-errors'
-import { KyselyPGDB, XRateRepository } from './db/xrate-repository'
+import { loggerConfig } from './config'
+import { checkDatabaseLiveness } from './db/db'
+import { XRateRepository } from './db/xrate-repository'
 import { createIoCContainer } from './ioc-container'
 import { CurrencyConversionService } from './services/currency-conversion/currency-conversion.service'
 import { EcbXRateService } from './services/ecb/ecb-xrates-service'
 import { KznbXRateService } from './services/kznb/kznb-xrates-service'
 import { TcmbXRateService } from './services/tcmb/tcmb-xrates-service'
-import { checkDatabaseLiveness } from './db/db'
 
 const ioCContainer = createIoCContainer()
 
@@ -21,10 +22,10 @@ const app = new Elysia()
           colorize: true,
         },
       },
-      level: 'debug',
+      level: loggerConfig.level,
     })
   )
-  .get('/', () => 'Hello Elysia')
+  .get('/', () => 'This is Elysia from bun.js, you may want to try /swagger endpoint')
   .use(swagger())
   .get('/health/ready', () => {
     return {
@@ -57,6 +58,7 @@ const app = new Elysia()
         date: t.Optional(
           t.String({
             description: 'Date in format YYYY-MM-DD',
+            default: new Date().toISOString().split('T')[0],
           })
         ),
         'currency-code': t.Optional(t.String({ description: 'ISO Currency Code, CAD USD EUR' })),
@@ -71,7 +73,10 @@ const app = new Elysia()
     },
     {
       query: t.Object({
-        date: t.String({ description: 'Date in format YYYY-MM-DD' }),
+        date: t.String({
+          description: 'Date in format YYYY-MM-DD',
+          default: new Date().toISOString().split('T')[0],
+        }),
       }),
     }
   )
@@ -83,7 +88,10 @@ const app = new Elysia()
     },
     {
       query: t.Object({
-        date: t.String({ description: 'Date in format YYYY-MM-DD' }),
+        date: t.String({
+          description: 'Date in format YYYY-MM-DD',
+          default: new Date().toISOString().split('T')[0],
+        }),
       }),
     }
   )
@@ -95,7 +103,10 @@ const app = new Elysia()
     },
     {
       query: t.Object({
-        date: t.String({ description: 'Date in format YYYY-MM-DD' }),
+        date: t.String({
+          description: 'Date in format YYYY-MM-DD',
+          default: new Date().toISOString().split('T')[0],
+        }),
       }),
     }
   )
@@ -115,7 +126,10 @@ const app = new Elysia()
     },
     {
       query: t.Object({
-        date: t.String({ description: 'Date in format YYYY-MM-DD' }),
+        date: t.String({
+          description: 'Date in format YYYY-MM-DD',
+          default: new Date().toISOString().split('T')[0],
+        }),
         amount: t.Numeric({ default: 1 }),
         fromCC: t.String({ description: 'ISO Currency Code, CAD USD EUR' }),
         toCC: t.String({ description: 'ISO Currency Code, CAD USD EUR' }),

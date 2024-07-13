@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16
+    container_name: postgresdb
+    environment:
+      POSTGRES_USER: xrates_app
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: xrates_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: xrates_bunjs_app
+    environment:
+      DATABASE_URL: postgres://xrates_app:secret@db:5432/xrates_db
+      DB_HOST: db
+      DB_PASSWORD: secret
+      DB_USER: xrates_app
+      DB_NAME: xrates_db
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+volumes:
+  postgres-data:
