@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@bogeychan/elysia-logger": "^0.0.22",
+    "@elysiajs/cron": "^1.0.3",
     "@elysiajs/swagger": "^1.0.5",
     "elysia": "latest",
     "http-errors": "^2.0.0",

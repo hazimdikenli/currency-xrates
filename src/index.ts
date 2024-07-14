@@ -10,6 +10,7 @@ import { CurrencyConversionService } from './services/currency-conversion/curren
 import { EcbXRateService } from './services/ecb/ecb-xrates-service'
 import { KznbXRateService } from './services/kznb/kznb-xrates-service'
 import { TcmbXRateService } from './services/tcmb/tcmb-xrates-service'
+import { cronConfig } from './cron-jobs'
 
 const ioCContainer = createIoCContainer()
 
@@ -25,6 +26,7 @@ const app = new Elysia()
       level: loggerConfig.level,
     })
   )
+  .use(cronConfig)
   .get('/', () => 'This is Elysia from bun.js, you may want to try /swagger endpoint')
   .use(swagger())
   .get('/health/ready', () => {
