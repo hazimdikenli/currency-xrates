@@ -24,19 +24,23 @@ export class IoCContainer {
 
     return this
   }
-  public getService<T>(name: string): T {
+  public get<T>(name: string): T {
     // @ts-ignore
     return this[name]
   }
 }
 
 const container = new IoCContainer()
+let containerInitialised = false
 export function createIoCContainer() {
-  registerDbProviders(container)
-  registerEcbProviders(container)
-  registerTcmbProviders(container)
-  registerKznbProviders(container)
-  registerConversionProviders(container)
+  if (!containerInitialised) {
+    registerDbProviders(container)
+    registerEcbProviders(container)
+    registerTcmbProviders(container)
+    registerKznbProviders(container)
+    registerConversionProviders(container)
+    containerInitialised = true
+  }
 
   return container
 }

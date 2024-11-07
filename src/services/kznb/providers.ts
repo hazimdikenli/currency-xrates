@@ -10,8 +10,8 @@ export default function registerTcmbProviders(container: IoCContainer) {
     KznbXRateService.name,
     c =>
       new KznbXRateService(
-        c.getService<XRateRepository>(XRateRepository.name),
-        c.getService<KznbXRatesDownloader>(KznbXRatesDownloader.name)
+        c.get<XRateRepository>(XRateRepository.name),
+        c.get<KznbXRatesDownloader>(KznbXRatesDownloader.name)
       )
   )
 }

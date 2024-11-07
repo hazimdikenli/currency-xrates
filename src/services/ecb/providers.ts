@@ -11,9 +11,9 @@ export default function registerEcbProviders(container: IoCContainer) {
     c =>
       //
       new EcbXRateService(
-        c.getService<XRateRepository>(XRateRepository.name),
+        c.get<XRateRepository>(XRateRepository.name),
         //
-        c.getService<EcbXRatesDownloader>(EcbXRatesDownloader.name)
+        c.get<EcbXRatesDownloader>(EcbXRatesDownloader.name)
       )
   )
 }

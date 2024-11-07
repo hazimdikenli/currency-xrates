@@ -26,4 +26,3 @@ DB_PASSWORD=very-secret
 DB_NAME=db-name
 
 LOG_LEVEL=debug
-
