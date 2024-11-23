@@ -29,3 +29,4 @@ const app = new Elysia()
   .listen(3000)
 
 console.log(`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`)
+console.info(`🦊 Check out API Documentation at:`, app.server?.url.href + `swagger`)
