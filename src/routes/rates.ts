@@ -34,26 +34,15 @@ export const rateRoutes = (ioCContainer: IoCContainer) =>
         }),
       }
     )
-    .post(
-      '/rates/ecb/daily',
-      async ({ query: { date } }) => {
-        const service = ioCContainer.get<EcbXRateService>(EcbXRateService.name)
-        return service.downloadDailyRates(date)
-      },
-      {
-        query: t.Object({
-          date: t.String({
-            description: 'Date in format YYYY-MM-DD',
-            default: new Date().toISOString().split('T')[0],
-          }),
-        }),
-      }
-    )
-    .post(
-      '/rates/tcmb/daily',
+    .get('/rates/ecb/daily', async () => {
+      const service = ioCContainer.get<EcbXRateService>(EcbXRateService.name)
+      return service.downloadDailyRates()
+    })
+    .get(
+      '/rates/tcmb/download-specific-date',
       async ({ query: { date } }) => {
         const service = ioCContainer.get<TcmbXRateService>(TcmbXRateService.name)
-        return service.downloadDailyRates(date)
+        return service.downloadSpecificDate(date)
       },
       {
         query: t.Object({
@@ -64,7 +53,11 @@ export const rateRoutes = (ioCContainer: IoCContainer) =>
         }),
       }
     )
-    .post(
+    .get('/rates/tcmb/daily', async () => {
+      const service = ioCContainer.get<TcmbXRateService>(TcmbXRateService.name)
+      return service.downloadDailyRates()
+    })
+    .get(
       '/rates/kznb/daily',
       async ({ query: { date } }) => {
         const service = ioCContainer.get<KznbXRateService>(KznbXRateService.name)
