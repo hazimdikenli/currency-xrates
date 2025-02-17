@@ -10,12 +10,10 @@
       "request": "launch",
       "name": "Debug Elysia",
       "program": "index.ts",
-      "runtimeArgs": [
-        "--env-file=${workspaceFolder}/.env"
-      ],
+      "runtimeArgs": ["--env-file=${workspaceFolder}/.env"],
       "cwd": "${workspaceFolder}/src",
       "env": {
-        "NODE_ENV": "development",
+        "NODE_ENV": "development"
       },
       "stopOnEntry": false,
       "watchMode": false
