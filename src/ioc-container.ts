@@ -7,16 +7,16 @@ import registerConversionProviders from './services/currency-conversion/provider
 type ServiceCallback<T> = (container: IoCContainer) => T
 
 export class IoCContainer {
-  private services: { [key: string]: any } = {}
+  private services: Record<string, unknown> = {}
 
   public service<T>(name: string, cb: ServiceCallback<T>): this {
     Object.defineProperty(this, name, {
       get: (): T => {
-        if (!this.services.hasOwnProperty(name)) {
+        if (!Object.prototype.hasOwnProperty.call(this.services, name)) {
           console.log(`registering service ${name}`)
           this.services[name] = cb(this)
         }
-        return this.services[name]
+        return this.services[name] as T
       },
       configurable: true,
       enumerable: true,
@@ -25,7 +25,7 @@ export class IoCContainer {
     return this
   }
   public get<T>(name: string): T {
-    // @ts-ignore
+    // @ts-expect-error returns the registered service
     return this[name]
   }
 }

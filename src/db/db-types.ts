@@ -1,4 +1,4 @@
-import type { ColumnType, Insertable, Selectable, Transaction, Updateable } from 'kysely'
+import type { Kysely, ColumnType, Insertable, Selectable, Updateable } from 'kysely'
 
 export type Generated<T> =
   T extends ColumnType<infer S, infer I, infer U>
@@ -23,13 +23,7 @@ export interface CurrencyExchangeRateTable {
 export interface DB {
   currency_exchange_rate: CurrencyExchangeRateTable
 }
-
-export interface OptionObject {
-  date: Date
-  dateStr: string
-  transaction: Transaction<DB>
-  by?: { id?: number }
-}
+export type KyselyPGDB = Kysely<DB>
 
 export type CurrencyExchangeRate = Selectable<CurrencyExchangeRateTable>
 export type CurrencyExchangeRateUpdate = Updateable<CurrencyExchangeRateTable>

@@ -1,5 +1,4 @@
-import { CurrencyExchangeRate, CurrencyExchangeRateCreate, DB } from './db-types'
-import { Kysely } from 'kysely'
+import { CurrencyExchangeRate, CurrencyExchangeRateCreate, KyselyPGDB } from './db-types'
 
 const tableName = 'currency_exchange_rate'
 export type CurrencyExchangeRateDto = {
@@ -11,7 +10,6 @@ export type CurrencyExchangeRateDto = {
   target_currency_code: string
 }
 
-export type KyselyPGDB = Kysely<DB>
 export class XRateRepository {
   constructor(private db: KyselyPGDB) {}
   findMany(criteria: CriteriaType): Promise<CurrencyExchangeRateDto[]> {

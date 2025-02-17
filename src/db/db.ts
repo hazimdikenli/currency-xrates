@@ -12,13 +12,10 @@ const pool = new Pool({
   ssl: false,
 })
 
-const parseFn = function (val: unknown) {
-  return new Date(val as string).toISOString()
-}
+const parseFn = (val: unknown) => new Date(val as string).toISOString()
 
-const parseFnDate = function (val: unknown) {
-  return val as string
-}
+
+const parseFnDate = (val: unknown) => val as string
 
 pgTypes.setTypeParser(pgTypes.builtins.TIMESTAMPTZ, parseFn)
 pgTypes.setTypeParser(pgTypes.builtins.DATE, parseFnDate)
