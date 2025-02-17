@@ -1,4 +1,4 @@
-import { expect, test, describe } from 'bun:test'
+import { test, describe } from 'bun:test'
 import assert from 'node:assert'
 import parseKznbRatesXML from './kznb-xrates-parser'
 
@@ -20,7 +20,7 @@ describe('kznb-xrates', () => {
   })
 })
 
-var xmlString = `<?xml version="1.0" encoding="utf-8"?>
+const xmlString = `<?xml version="1.0" encoding="utf-8"?>
 <rates>
         <generator>Alternate RSS Builder</generator>
         <title>Official exchange rates of National Bank of Republic Kazakhstan</title>

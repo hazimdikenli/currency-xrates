@@ -1,4 +1,4 @@
-import { CurrencyExchangeRateDto, XRateRepository } from '../../db/xrate-repository'
+import { CurrencyExchangeRateDto } from '../../db/xrate-repository'
 import { TcmbExchangeType } from '../tcmb/tcmb-xrates-parser'
 
 type CurrencyCode = 'TRY' | 'GBP' | 'USD' | 'EUR' | 'CHF' | string
@@ -21,9 +21,7 @@ export class CurrencyConversionService {
     if (fromCC === toCC) return amount
     if (Number(amount) === 0) return amount
 
-    let xrates = await this.xrateRepository.findMany({
-      exchange_date: date,
-    })
+    let xrates = await this.xrateRepository.findMany({ exchange_date: date })
     if (exchangeType) xrates = xrates.filter(f => f.exchange_type === exchangeType)
     return this.doConversion(amount, fromCC, toCC, xrates)
   }

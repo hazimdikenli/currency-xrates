@@ -1,10 +1,4 @@
-import { differenceBy, extend, isEqual, omit } from 'lodash'
-import {
-  CurrencyExchangeRate,
-  CurrencyExchangeRateCreate,
-  CurrencyExchangeRateTable,
-  DB,
-} from './db-types'
+import { CurrencyExchangeRate, CurrencyExchangeRateCreate, DB } from './db-types'
 import { Kysely } from 'kysely'
 
 const tableName = 'currency_exchange_rate'

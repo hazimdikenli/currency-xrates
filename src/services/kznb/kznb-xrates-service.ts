@@ -1,8 +1,7 @@
-import { IoCContainer } from '../../ioc-container'
 import { XRateRepository } from '../../db/xrate-repository'
 import { KznbXRatesDownloader } from './kznb-xrates-downloader'
 import parseKznbRatesXML from './kznb-xrates-parser'
-import { CurrencyExchangeRate, CurrencyExchangeRateCreate } from '../../db/db-types'
+import { CurrencyExchangeRateCreate } from '../../db/db-types'
 
 const ExchangeType = 'KZNB'
 export class KznbXRateService {
@@ -27,7 +26,7 @@ export class KznbXRateService {
         currency_code,
         target_amount: rate,
         target_currency_code: 'KZT',
-        exchange_type: 'KZNB',
+        exchange_type: ExchangeType,
         exchange_date: dateToDownload,
       })
     )

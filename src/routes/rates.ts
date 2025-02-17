@@ -17,10 +17,7 @@ export const rateRoutes = (ioCContainer: IoCContainer) =>
           throw createHttpError(400, 'either date or currency-code are required')
         }
         const xRateRepository = ioCContainer.get<XRateRepository>(XRateRepository.name)
-        return xRateRepository.findMany({
-          exchange_date: date,
-          currency_code,
-        })
+        return xRateRepository.findMany({ exchange_date: date, currency_code })
       },
       {
         query: t.Object({
@@ -76,13 +73,7 @@ export const rateRoutes = (ioCContainer: IoCContainer) =>
       '/convert-currency',
       async ({ query: { amount, fromCC, date, toCC, exchangeType = '' } }) => {
         const service = ioCContainer.get<CurrencyConversionService>(CurrencyConversionService.name)
-        return service.convert({
-          amount: Number(amount),
-          fromCC,
-          date,
-          toCC,
-          exchangeType,
-        })
+        return service.convert({ amount: Number(amount), fromCC, date, toCC, exchangeType })
       },
       {
         query: t.Object({

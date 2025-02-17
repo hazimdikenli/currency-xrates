@@ -14,7 +14,7 @@ describe('tcmb-xrates', () => {
   })
 })
 
-var xmlString = `<?xml version="1.0" encoding="UTF-8"?>
+const xmlString = `<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="isokur.xsl"?>
 <Tarih_Date Tarih="08.07.2024" Date="07/08/2024" Bulten_No="2024/126">
 	<Currency CrossOrder="0" Kod="USD" CurrencyCode="USD">

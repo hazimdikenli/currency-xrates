@@ -1,4 +1,4 @@
-import { expect, test, describe, beforeEach, mock } from 'bun:test'
+import { expect, test, describe } from 'bun:test'
 import { CurrencyConversionService } from './currency-conversion.service'
 import { CurrencyExchangeRate } from '../../db/db-types'
 
@@ -27,7 +27,7 @@ class XRateRepositoryStub {
 
 describe('currency-conversion', () => {
   test('test xact match currency-conversion', async () => {
-    let currencyConversionService = new CurrencyConversionService(new XRateRepositoryStub())
+    const currencyConversionService = new CurrencyConversionService(new XRateRepositoryStub())
     const resp = await currencyConversionService.convert({
       amount: 10,
       fromCC: 'TRY',
@@ -38,7 +38,7 @@ describe('currency-conversion', () => {
     expect(resp).toEqual(123.45)
   })
   test('test xact match currency-conversion in reverse order', async () => {
-    let currencyConversionService = new CurrencyConversionService(new XRateRepositoryStub())
+    const currencyConversionService = new CurrencyConversionService(new XRateRepositoryStub())
     const resp = await currencyConversionService.convert({
       amount: 12.345,
       fromCC: 'USD',
@@ -49,7 +49,7 @@ describe('currency-conversion', () => {
     expect(resp).toEqual(1)
   })
   test('test match through common currency in 2 different currency entries', async () => {
-    let currencyConversionService = new CurrencyConversionService(new XRateRepositoryStub())
+    const currencyConversionService = new CurrencyConversionService(new XRateRepositoryStub())
     const resp = await currencyConversionService.convert({
       amount: 2,
       fromCC: 'ABC',

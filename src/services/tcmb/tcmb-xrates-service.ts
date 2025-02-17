@@ -1,4 +1,3 @@
-import { IoCContainer } from '../../ioc-container'
 import { TcmbXRatesDownloader } from './tcmb-xrates-downloader'
 import parseTcmbDailyKurlarXML from './tcmb-xrates-parser'
 import { XRateRepository } from '../../db/xrate-repository'
@@ -12,7 +11,7 @@ export class TcmbXRateService {
   async downloadDailyRates() {
     const xml = await this.ratesDownloader.downloadXML()
 
-    const { currencies, exchangeRates, tarihDate } = await parseTcmbDailyKurlarXML(xml)
+    const { exchangeRates } = await parseTcmbDailyKurlarXML(xml)
     if (!exchangeRates) throw new Error(`Failed to parse XML: ${xml}`)
 
     const today = new Date()
@@ -24,19 +23,16 @@ export class TcmbXRateService {
       console.log('saving for three days')
     }
     for (let i = 1; i <= daysToSave; i++) {
-      let dateToSave = today
+      const dateToSave = today
       dateToSave.setDate(dateToSave.getDate() + i)
       const exchange_date = dateToSave.toISOString().split('T')[0]
-      const rates = exchangeRates.map(f => ({
-        ...f,
-        exchange_date,
-      }))
+      const rates = exchangeRates.map(f => ({ ...f, exchange_date }))
       await this.xrateRepository.createAll(rates)
     }
   }
   // try to get a specific date
   async downloadSpecificDate(dateAsIso: string) {
-    let date = new Date(dateAsIso)
+    const date = new Date(dateAsIso)
     // we need to go back one day, as turkish rates are declared on the previous day
     date.setDate(date.getDate() - 1)
     // it the day is on weekend we need to go back to friday
@@ -49,11 +45,11 @@ export class TcmbXRateService {
       date.toISOString().split('T')[0]
     )
 
-    const { currencies, exchangeRates, tarihDate } = await parseTcmbDailyKurlarXML(xml)
+    const { exchangeRates, tarihDate } = await parseTcmbDailyKurlarXML(xml)
     if (!exchangeRates) throw new Error(`Failed to parse XML: ${xml}`)
     const [day, month, year] = tarihDate.Tarih.split('.')
     // const downloadedDate = `${year}-${month}-${day}`
-    let downloadedDate = new Date(`${year}-${month}-${day}`)
+    const downloadedDate = new Date(`${year}-${month}-${day}`)
 
     // if it is saturday
     let daysToSave = 1
@@ -61,13 +57,10 @@ export class TcmbXRateService {
       daysToSave = 3
     }
     for (let i = 0; i < daysToSave; i++) {
-      let dateToSave = new Date(`${year}-${month}-${day}`)
+      const dateToSave = new Date(`${year}-${month}-${day}`)
       dateToSave.setDate(dateToSave.getDate() + i)
       const exchange_date = dateToSave.toISOString().split('T')[0]
-      const rates = exchangeRates.map(f => ({
-        ...f,
-        exchange_date,
-      }))
+      const rates = exchangeRates.map(f => ({ ...f, exchange_date }))
       await this.xrateRepository.createAll(rates)
     }
   }

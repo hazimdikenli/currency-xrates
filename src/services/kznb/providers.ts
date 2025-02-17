@@ -4,7 +4,7 @@ import { KznbXRatesDownloader } from './kznb-xrates-downloader'
 import { KznbXRateService } from './kznb-xrates-service'
 
 export default function registerTcmbProviders(container: IoCContainer) {
-  container.service(KznbXRatesDownloader.name, c => new KznbXRatesDownloader())
+  container.service(KznbXRatesDownloader.name, _c => new KznbXRatesDownloader())
 
   container.service(
     KznbXRateService.name,

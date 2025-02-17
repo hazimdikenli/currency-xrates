@@ -4,7 +4,7 @@ import { TcmbXRatesDownloader } from './tcmb-xrates-downloader'
 import { TcmbXRateService } from './tcmb-xrates-service'
 
 export default function registerTcmbProviders(container: IoCContainer) {
-  container.service(TcmbXRatesDownloader.name, c => new TcmbXRatesDownloader())
+  container.service(TcmbXRatesDownloader.name, _c => new TcmbXRatesDownloader())
 
   container.service(
     TcmbXRateService.name,
