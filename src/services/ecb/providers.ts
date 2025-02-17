@@ -4,7 +4,7 @@ import { EcbXRatesDownloader } from './ecb-xrates-downloader'
 import { EcbXRateService } from './ecb-xrates-service'
 
 export default function registerEcbProviders(container: IoCContainer) {
-  container.service(EcbXRatesDownloader.name, _c => new EcbXRatesDownloader())
+  container.service(EcbXRatesDownloader.name, () => new EcbXRatesDownloader())
 
   container.service(
     EcbXRateService.name,

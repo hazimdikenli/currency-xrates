@@ -3,7 +3,7 @@ import { CurrencyConversionService } from './currency-conversion.service'
 import { CurrencyExchangeRate } from '../../db/db-types'
 
 class XRateRepositoryStub {
-  async findMany(criteria: any): Promise<CurrencyExchangeRate[]> {
+  async findMany(/*criteria: any*/): Promise<CurrencyExchangeRate[]> {
     return [
       {
         amount: 1,

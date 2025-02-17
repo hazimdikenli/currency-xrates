@@ -1,6 +1,6 @@
 import { Kysely, PostgresDialect, sql } from 'kysely'
 import { Pool, types as pgTypes } from 'pg'
-import type { DB } from './db-types'
+import type { DB, KyselyPGDB } from './db-types'
 import { dbConfig } from '../config'
 
 const pool = new Pool({
@@ -14,7 +14,6 @@ const pool = new Pool({
 
 const parseFn = (val: unknown) => new Date(val as string).toISOString()
 
-
 const parseFnDate = (val: unknown) => val as string
 
 pgTypes.setTypeParser(pgTypes.builtins.TIMESTAMPTZ, parseFn)
@@ -25,7 +24,7 @@ export const pgDB = new Kysely<DB>({
   dialect: new PostgresDialect({
     pool: pool,
   }),
-})
+}) as KyselyPGDB
 
 /**
  * Checks if the database connection is alive by performing a lightweight query
